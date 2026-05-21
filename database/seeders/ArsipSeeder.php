@@ -1,0 +1,177 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Arsip;
+use Illuminate\Database\Seeder;
+
+class ArsipSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $arsip = [
+            [
+                'id_user' => 7,
+                'id_kategori' => 1,
+                'no_registrasi' => 'REG-20260101-001',
+                'nama' => 'SPJ Kegiatan Kecamatan Januari 2026',
+                'deskripsi' => 'Dokumen SPJ kegiatan operasional kecamatan bulan Januari 2026',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => '2031-01-01',
+                'status_retensi' => 'sementara',
+                'status_validasi' => 'diterima',
+                'pesan_penolakan' => null,
+            ],
+            [
+                'id_user' => 7,
+                'id_kategori' => 2,
+                'no_registrasi' => 'REG-20260215-002',
+                'nama' => 'Surat Keterangan Ahli Waris Budi Santoso',
+                'deskripsi' => 'Dokumen surat ahli waris atas nama Budi Santoso',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => null,
+                'status_retensi' => 'permanen',
+                'status_validasi' => 'diterima',
+                'pesan_penolakan' => null,
+            ],
+            [
+                'id_user' => 4,
+                'id_kategori' => 3,
+                'no_registrasi' => 'REG-20260320-003',
+                'nama' => 'IMB Renovasi Rumah',
+                'deskripsi' => 'Dokumen izin mendirikan bangunan renovasi rumah tinggal',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => '2030-05-10',
+                'status_retensi' => 'sementara',
+                'status_validasi' => 'ditolak',
+                'pesan_penolakan' => 'Dokumen persyaratan belum lengkap',
+            ],
+            [
+                'id_user' => 5,
+                'id_kategori' => 1,
+                'no_registrasi' => 'REG-20260405-004',
+                'nama' => 'SPJ Pengadaan Barang',
+                'deskripsi' => 'Dokumen SPJ pengadaan barang inventaris kantor',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => '2032-12-31',
+                'status_retensi' => 'sementara',
+                'status_validasi' => 'pending',
+                'pesan_penolakan' => null,
+            ],
+            [
+                'id_user' => 6,
+                'id_kategori' => 3,
+                'no_registrasi' => 'REG-20260405-005',
+                'nama' => 'IMB Pembangunan Ruko',
+                'deskripsi' => 'Dokumen izin pembangunan ruko dua lantai',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => null,
+                'status_retensi' => 'permanen',
+                'status_validasi' => 'diterima',
+                'pesan_penolakan' => null,
+            ],
+
+            // tambahan data
+            [
+                'id_user' => 2,
+                'id_kategori' => 1,
+                'no_registrasi' => 'REG-20260511-006',
+                'nama' => 'SPJ Perjalanan Dinas',
+                'deskripsi' => 'Dokumen SPJ perjalanan dinas luar kota',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => '2031-05-11',
+                'status_retensi' => 'sementara',
+                'status_validasi' => 'diterima',
+                'pesan_penolakan' => null,
+            ],
+            [
+                'id_user' => 3,
+                'id_kategori' => 2,
+                'no_registrasi' => 'REG-20260515-007',
+                'nama' => 'Surat Domisili Usaha',
+                'deskripsi' => 'Dokumen surat domisili usaha UMKM',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => null,
+                'status_retensi' => 'permanen',
+                'status_validasi' => 'pending',
+                'pesan_penolakan' => null,
+            ],
+            [
+                'id_user' => 4,
+                'id_kategori' => 2,
+                'no_registrasi' => 'REG-20260518-008',
+                'nama' => 'Surat Pengantar Nikah',
+                'deskripsi' => 'Dokumen pengantar nikah warga',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => '2030-05-18',
+                'status_retensi' => 'sementara',
+                'status_validasi' => 'ditolak',
+                'pesan_penolakan' => 'Tanda tangan kepala desa belum tersedia',
+            ],
+            [
+                'id_user' => 5,
+                'id_kategori' => 3,
+                'no_registrasi' => 'REG-20260520-009',
+                'nama' => 'IMB Gudang Penyimpanan',
+                'deskripsi' => 'Dokumen IMB pembangunan gudang penyimpanan',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => null,
+                'status_retensi' => 'permanen',
+                'status_validasi' => 'diterima',
+                'pesan_penolakan' => null,
+            ],
+            [
+                'id_user' => 6,
+                'id_kategori' => 1,
+                'no_registrasi' => 'REG-20260522-010',
+                'nama' => 'SPJ Kegiatan Sosialisasi',
+                'deskripsi' => 'Dokumen SPJ kegiatan sosialisasi masyarakat',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => '2033-05-22',
+                'status_retensi' => 'sementara',
+                'status_validasi' => 'pending',
+                'pesan_penolakan' => null,
+            ],
+            [
+                'id_user' => 2,
+                'id_kategori' => 2,
+                'no_registrasi' => 'REG-20260525-011',
+                'nama' => 'Surat Keterangan Tidak Mampu',
+                'deskripsi' => 'Dokumen SKTM untuk pengajuan bantuan pendidikan',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => '2029-05-25',
+                'status_retensi' => 'sementara',
+                'status_validasi' => 'diterima',
+                'pesan_penolakan' => null,
+            ],
+            [
+                'id_user' => 3,
+                'id_kategori' => 3,
+                'no_registrasi' => 'REG-20260527-012',
+                'nama' => 'IMB Tempat Usaha',
+                'deskripsi' => 'Dokumen izin mendirikan bangunan tempat usaha',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => null,
+                'status_retensi' => 'permanen',
+                'status_validasi' => 'ditolak',
+                'pesan_penolakan' => 'Dokumen site plan tidak dilampirkan',
+            ],
+            [
+                'id_user' => 4,
+                'id_kategori' => 1,
+                'no_registrasi' => 'REG-20260601-013',
+                'nama' => 'SPJ Pemeliharaan Gedung',
+                'deskripsi' => 'Dokumen SPJ pemeliharaan gedung kantor',
+                'file' => 'dokumen.pdf',
+                'tanggal_retensi' => '2034-06-01',
+                'status_retensi' => 'sementara',
+                'status_validasi' => 'diterima',
+                'pesan_penolakan' => null,
+            ],
+        ];
+
+        foreach ($arsip as $item) {
+            Arsip::create($item);
+        }
+    }
+}
