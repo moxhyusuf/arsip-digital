@@ -79,7 +79,7 @@
                 </li>
 
                 <li class="pc-item">
-                    <a href="../elements/bc_color.html" class="pc-link">
+                    <a href="{{ route('laporan.index') }}" class="pc-link">
                         <span class="pc-micon">
                             <svg class="pc-icon">
                                 <use xlink:href="#flag"></use>

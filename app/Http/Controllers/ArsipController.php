@@ -67,7 +67,7 @@ class ArsipController extends Controller
             $request->validate(['file' => 'file|mimes:pdf,doc,docx']);
 
             if ($arsip->file && Storage::disk('public')->exists($arsip->file)) {
-                Storage::disk('public')->delete($arsip->file);
+                // Storage::disk('public')->delete($arsip->file); // sementara di-comment untuk menghindari error saat file tidak ditemukan
             }
 
             $validated['file'] = $request->file('file')->store('arsip', 'public');
@@ -82,7 +82,7 @@ class ArsipController extends Controller
         $arsip = Arsip::findOrFail($id);
 
         if ($arsip->file && Storage::disk('public')->exists($arsip->file)) {
-            Storage::disk('public')->delete($arsip->file);
+            // Storage::disk('public')->delete($arsip->file); // sementara di-comment untuk menghindari error saat file tidak ditemukan
         }
 
         $arsip->delete();

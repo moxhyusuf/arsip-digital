@@ -4,6 +4,7 @@ use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/arsip', ArsipController::class);
     Route::post('arsip/{id}/validasi', [ArsipController::class, 'validasi'])->name('arsip.validasi');
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/export/excel', [LaporanController::class, 'exportExcel'])->name('laporan.export.excel');
+    Route::get('/laporan/export/pdf', [LaporanController::class, 'exportPdf'])->name('laporan.export.pdf');
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 });
