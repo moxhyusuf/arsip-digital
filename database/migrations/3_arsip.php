@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('deskripsi');
             $table->string('file');
             $table->date('tanggal_retensi')->nullable();
-            $table->enum('status_retensi', ['permanen', 'sementara'])->default('permanen');
+            $table->enum('status_retensi', ['permanen', 'sementara', 'dimusnahkan (Srikandi)'])->default('permanen');
             $table->enum('status_validasi', ['pending', 'diterima', 'ditolak'])->default('pending');
             $table->string('pesan_penolakan')->nullable();
             $table->softDeletes();

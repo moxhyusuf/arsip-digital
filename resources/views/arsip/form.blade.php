@@ -69,6 +69,10 @@
             <option value="sementara" @selected(old('status_retensi', $arsip->status_retensi ?? '') == 'sementara')>
                 Sementara
             </option>
+
+            <option value="dimusnahkan (Srikandi)" @selected(old('status_retensi', $arsip->status_retensi ?? '') == 'dimusnahkan (Srikandi)')>
+                Dimusnahkan (Srikandi)
+            </option>
         </select>
 
         @error('status_retensi')

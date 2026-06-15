@@ -34,7 +34,7 @@ class ArsipController extends Controller
             'deskripsi' => 'required|string',
             'file' => 'required|file|mimes:pdf,doc,docx',
             'tanggal_retensi' => 'nullable|date',
-            'status_retensi' => 'required|in:permanen,sementara',
+            'status_retensi' => 'required|in:permanen,sementara,dimusnahkan (Srikandi)',
         ]);
 
         $validated['id_user'] = Auth::id();
@@ -60,14 +60,14 @@ class ArsipController extends Controller
             'nama' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'tanggal_retensi' => 'nullable|date',
-            'status_retensi' => 'required|in:permanen,sementara',
+            'status_retensi' => 'required|in:permanen,sementara,dimusnahkan (Srikandi)',
         ]);
 
         if ($request->hasFile('file')) {
             $request->validate(['file' => 'file|mimes:pdf,doc,docx']);
 
             if ($arsip->file && Storage::disk('public')->exists($arsip->file)) {
-                // Storage::disk('public')->delete($arsip->file); // sementara di-comment untuk menghindari error saat file tidak ditemukan
+                // Storage::disk('public')->delete($arsip->file); //
             }
 
             $validated['file'] = $request->file('file')->store('arsip', 'public');
@@ -82,7 +82,7 @@ class ArsipController extends Controller
         $arsip = Arsip::findOrFail($id);
 
         if ($arsip->file && Storage::disk('public')->exists($arsip->file)) {
-            // Storage::disk('public')->delete($arsip->file); // sementara di-comment untuk menghindari error saat file tidak ditemukan
+            // Storage::disk('public')->delete($arsip->file); //
         }
 
         $arsip->delete();
