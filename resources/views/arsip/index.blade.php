@@ -38,7 +38,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No Registrasi</th>
+                                    <th>Kode Arsip</th>
                                     <th>Kategori</th>
                                     <th>Nama</th>
                                     <th>Status Retensi</th>
@@ -56,7 +56,7 @@
                                         </td>
 
                                         <td>
-                                            {{ $item->no_registrasi }}
+                                            {{ $item->kode }}
                                         </td>
 
                                         <td>
@@ -137,9 +137,11 @@
 
                                                 @if ($item->status_validasi != 'diterima')
                                                     @if (Auth::user()->role == 'unit pengolah')
-                                                        <a href="{{ route('arsip.edit', $item->id) }}" class="btn btn-warning btn-sm">
-                                                            Edit
-                                                        </a>
+                                                        @if ($item->kategori->nama != 'SPJ')
+                                                            <a href="{{ route('arsip.edit', $item->id) }}" class="btn btn-warning btn-sm">
+                                                                Edit
+                                                            </a>
+                                                        @endif
 
                                                         <form action="{{ route('arsip.destroy', $item->id) }}" method="POST" class="form-delete">
                                                             @csrf

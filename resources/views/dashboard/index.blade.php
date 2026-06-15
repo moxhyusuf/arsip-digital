@@ -152,7 +152,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>No Registrasi</th>
+                                            <th>Kode Arsip</th>
                                             <th>Unit Pengolah</th>
                                             <th>Kategori</th>
                                             <th>Nama Arsip</th>
@@ -170,7 +170,7 @@
                                                 </td>
 
                                                 <td>
-                                                    {{ $item->no_registrasi }}
+                                                    {{ $item->kode }}
                                                 </td>
 
                                                 <td>

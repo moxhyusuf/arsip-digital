@@ -61,7 +61,7 @@ class LaporanExport implements
 
             return [
                 'Tanggal' => $item->created_at->format('d-m-Y'),
-                'No Registrasi' => $item->no_registrasi,
+                'Kode' => $item->kode,
                 'Unit Pengolah' => $item->user->nama,
                 'Kategori' => $item->kategori->nama,
                 'Nama Arsip' => $item->nama,
@@ -75,7 +75,7 @@ class LaporanExport implements
     {
         return [
             'Tanggal',
-            'No Registrasi',
+            'Kode',
             'Unit Pengolah',
             'Kategori',
             'Nama Arsip',

@@ -12,13 +12,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_user')->constrained('user', 'id');
             $table->foreignId('id_kategori')->constrained('kategori', 'id');
-            $table->string('no_registrasi')->unique()->nullable();
+            $table->string('kode')->unique()->nullable();
             $table->string('nama');
-            $table->string('deskripsi');
+            $table->string('deskripsi')->nullable();
             $table->string('file');
             $table->date('tanggal_retensi')->nullable();
             $table->enum('status_retensi', ['permanen', 'sementara', 'dimusnahkan (Srikandi)'])->default('permanen');
             $table->enum('status_validasi', ['pending', 'diterima', 'ditolak'])->default('pending');
+            $table->boolean('is_encrypted')->default(false);
             $table->string('pesan_penolakan')->nullable();
             $table->softDeletes();
             $table->timestamps();

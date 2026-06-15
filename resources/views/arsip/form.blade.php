@@ -2,12 +2,12 @@
 
     <div class="col-md-6 mb-3">
         <label class="form-label">
-            No Registrasi
+            Kode Arsip
         </label>
 
-        <input type="text" name="no_registrasi" class="form-control @error('no_registrasi') is-invalid @enderror" value="{{ old('no_registrasi', $arsip->no_registrasi ?? '') }}" placeholder="Masukkan no registrasi">
+        <input type="text" name="kode" class="form-control @error('kode') is-invalid @enderror" value="{{ old('kode', $arsip->kode ?? '') }}" placeholder="Masukkan kode arsip">
 
-        @error('no_registrasi')
+        @error('kode')
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
@@ -15,26 +15,20 @@
     </div>
 
     <div class="col-md-6 mb-3">
-        <label class="form-label">
-            Kategori
-        </label>
-
+        <label class="form-label">Kategori</label>
         <select name="id_kategori" class="form-select @error('id_kategori') is-invalid @enderror">
-            <option value="">
-                -- Pilih Kategori --
-            </option>
-
+            <option value="">-- Pilih Kategori --</option>
             @foreach ($kategori as $item)
+                @if (isset($arsip->id) && $item->nama === 'SPJ')
+                    @continue
+                @endif
                 <option value="{{ $item->id }}" @selected(old('id_kategori', $arsip->id_kategori ?? '') == $item->id)>
                     {{ $item->nama }}
                 </option>
             @endforeach
         </select>
-
         @error('id_kategori')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
+            <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
 
@@ -101,7 +95,7 @@
             File
         </label>
 
-        <input type="file" name="file" class="form-control @error('file') is-invalid @enderror" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+        <input type="file" name="file" class="form-control @error('file') is-invalid @enderror" accept="application/pdf">
 
         @error('file')
             <div class="invalid-feedback">
@@ -124,6 +118,20 @@
         @enderror
     </div>
 
+    <div class="col-md-6 mb-3" id="passphrase-field" style="display:none;">
+        <label class="form-label">
+            Passphrase Enkripsi File (khusus SPJ)
+        </label>
+
+        <input type="password" name="passphrase" class="form-control @error('passphrase') is-invalid @enderror" placeholder="Masukkan passphrase untuk enkripsi file">
+
+        <small class="text-muted">Wajib diingat — passphrase ini diperlukan untuk membuka file nanti. (Min 6 karakter)</small>
+
+        @error('passphrase')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+
 </div>
 
 <div class="d-flex justify-content-end gap-2 mt-3">
@@ -137,3 +145,24 @@
     </button>
 
 </div>
+
+
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const kategoriSelect = document.querySelector('select[name="id_kategori"]');
+            const passField = document.getElementById('passphrase-field');
+
+            const spjOptions = Array.from(kategoriSelect.options)
+                .filter(opt => opt.text.trim().toLowerCase() === 'spj')
+                .map(opt => opt.value);
+
+            function toggleField() {
+                passField.style.display = spjOptions.includes(kategoriSelect.value) ? 'block' : 'none';
+            }
+
+            kategoriSelect.addEventListener('change', toggleField);
+            toggleField();
+        });
+    </script>
+@endpush

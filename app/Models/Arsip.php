@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['id_user', 'id_kategori', 'no_registrasi', 'nama', 'deskripsi', 'file', 'tanggal_retensi', 'status_retensi', 'status_validasi', 'pesan_penolakan'])]
+#[Fillable(['id_user', 'id_kategori', 'kode', 'nama', 'deskripsi', 'file', 'tanggal_retensi', 'status_retensi', 'status_validasi', 'is_encrypted', 'pesan_penolakan'])]
 #[Hidden([])]
 
 class Arsip extends Model

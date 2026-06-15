@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Arsip;
 use App\Models\Kategori;
 use App\Models\User;
+use App\Services\PdfEncryptionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ArsipController extends Controller
 {
@@ -26,19 +28,36 @@ class ArsipController extends Controller
 
     public function store(Request $request)
     {
+        $kategoriModel = Kategori::find($request->id_kategori);
+        $isSpj = $kategoriModel && strtolower($kategoriModel->nama) === 'spj';
+
         $validated = $request->validate([
             'id_user' => 'nullable|exists:user,id',
             'id_kategori' => 'required|exists:kategori,id',
-            'no_registrasi' => 'required|string|max:255',
+            'kode' => 'required|string|max:255',
             'nama' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'file' => 'required|file|mimes:pdf,doc,docx',
+            'deskripsi' => 'nullable|string',
+            'file' => ['required', 'file', $isSpj ? 'mimes:pdf' : 'mimes:pdf,doc,docx'],
             'tanggal_retensi' => 'nullable|date',
             'status_retensi' => 'required|in:permanen,sementara,dimusnahkan (Srikandi)',
+            'passphrase' => [Rule::requiredIf($isSpj), 'string', 'min:6'],
+        ], [
+            'passphrase.required' => 'Passphrase wajib diisi untuk arsip kategori SPJ.',
+            'file.mimes' => 'File untuk kategori SPJ harus berformat PDF.',
         ]);
 
         $validated['id_user'] = Auth::id();
-        $validated['file'] = $request->file('file')->store('arsip', 'public');
+        $path = $request->file('file')->store('arsip', 'public');
+        $validated['file'] = $path;
+
+        if ($isSpj) {
+            $absolutePath = Storage::disk('public')->path($path);
+            app(PdfEncryptionService::class)->encrypt($absolutePath, $validated['passphrase']);
+            $validated['is_encrypted'] = true;
+        }
+
+        unset($validated['passphrase']);
+
         Arsip::create($validated);
         return redirect()->route('arsip.index', ['id_user' => Auth::id()])->with('success', 'Data arsip berhasil ditambahkan');
     }
@@ -46,6 +65,9 @@ class ArsipController extends Controller
     public function edit(string $id)
     {
         $arsip = Arsip::findOrFail($id);
+        if ($arsip->kategori && $arsip->kategori->nama === 'SPJ') {
+            return redirect()->route('arsip.index')->with('error', 'Arsip dengan kategori SPJ tidak dapat diubah.');
+        }
         $kategori = Kategori::all();
         return view('arsip.edit', compact('arsip', 'kategori'));
     }
@@ -56,9 +78,9 @@ class ArsipController extends Controller
 
         $validated = $request->validate([
             'id_kategori' => 'required|exists:kategori,id',
-            'no_registrasi' => 'required|string|max:255',
+            'kode' => 'required|string|max:255',
             'nama' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
+            'deskripsi' => 'nullable|string',
             'tanggal_retensi' => 'nullable|date',
             'status_retensi' => 'required|in:permanen,sementara,dimusnahkan (Srikandi)',
         ]);
@@ -67,7 +89,7 @@ class ArsipController extends Controller
             $request->validate(['file' => 'file|mimes:pdf,doc,docx']);
 
             if ($arsip->file && Storage::disk('public')->exists($arsip->file)) {
-                // Storage::disk('public')->delete($arsip->file); //
+                Storage::disk('public')->delete($arsip->file);
             }
 
             $validated['file'] = $request->file('file')->store('arsip', 'public');
@@ -82,7 +104,7 @@ class ArsipController extends Controller
         $arsip = Arsip::findOrFail($id);
 
         if ($arsip->file && Storage::disk('public')->exists($arsip->file)) {
-            // Storage::disk('public')->delete($arsip->file); //
+            Storage::disk('public')->delete($arsip->file);
         }
 
         $arsip->delete();
