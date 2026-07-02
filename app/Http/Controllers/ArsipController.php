@@ -34,16 +34,13 @@ class ArsipController extends Controller
         $validated = $request->validate([
             'id_user' => 'nullable|exists:user,id',
             'id_kategori' => 'required|exists:kategori,id',
-            'kode' => 'required|string|max:255',
+            'kode' => 'required|string|max:255|unique:arsip,kode',
             'nama' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'file' => ['required', 'file', $isSpj ? 'mimes:pdf' : 'mimes:pdf,doc,docx'],
             'tanggal_retensi' => 'nullable|date',
             'status_retensi' => 'required|in:permanen,sementara,dimusnahkan (Srikandi)',
-            'passphrase' => [Rule::requiredIf($isSpj), 'string', 'min:6'],
-        ], [
-            'passphrase.required' => 'Passphrase wajib diisi untuk arsip kategori SPJ.',
-            'file.mimes' => 'File untuk kategori SPJ harus berformat PDF.',
+            'passphrase' => [Rule::requiredIf($isSpj), 'string', 'nullable', 'min:6'],
         ]);
 
         $validated['id_user'] = Auth::id();
